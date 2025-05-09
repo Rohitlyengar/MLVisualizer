@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='lab-ml5sem',
-    version='1.0.0',
+    name='MLVisualizer',
+    version='1.0.3',
     description='A Python package for visualizing machine learning algorithms and their outputs.',
     long_description=open('README.md', encoding='utf-8').read(),
     long_description_content_type='text/markdown',

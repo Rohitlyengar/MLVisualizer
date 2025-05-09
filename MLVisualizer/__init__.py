@@ -1,1 +1,1 @@
-from .main import DecisionTreeVisualizer, ConfusionMatrixVisualizer, MeshGridVisualizer, ScatterPlotVisualizer, ElbowGraphVisualizer, DendrogramVisualizer, ClusterVisualizer, DBSCANVisualizer
+from .main import DecisionTreeVisualizer, ConfusionMatrixVisualizer, MeshGridVisualizer, ScatterPlotVisualizer, ElbowGraphVisualizer, DendrogramVisualizer, ClusterVisualizer, DBSCANVisualizer, MLP

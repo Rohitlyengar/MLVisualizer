@@ -84,3 +84,56 @@ def DBSCANVisualizer(data=None, classifier=None):
     plt.legend((r, g, b, c, y, m, k),
                 ('Label M.0', 'Label M.1', 'Label M.2', 'Label M.3', 'Label M.4', 'Label M.5', 'Label M.-1'),
                 scatterpoints=1, loc='upper left', ncol=3, fontsize=10)
+
+def MLP():
+    print("""
+    class MLP:
+    def __init__(self, input_size, h_size, o_size, epochs=10000, lr=0.1):
+        self.w1 = np.random.rand(input_size, h_size)
+        self.b1 = np.random.rand(1, h_size)
+        self.w2 = np.random.rand(h_size, o_size)
+        self.b2 = np.random.rand(1, o_size)
+        self.epochs = epochs
+        self.lr = lr
+
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+
+    def sigmoid_der(self, x):
+        return x * (1 - x)
+
+    def predict(self, x):
+        h_in = np.dot(x, self.w1) + self.b1
+        h_out = self.sigmoid(h_in)
+        o_in = np.dot(h_out, self.w2) + self.b2  # Fixed: use h_out, not h_in
+        o_out = self.sigmoid(o_in)
+        return o_out
+
+    def train(self, x, y):
+        for _ in range(self.epochs):
+            h_in = np.dot(x, self.w1) + self.b1
+            h_out = self.sigmoid(h_in)
+            o_in = np.dot(h_out, self.w2) + self.b2
+            o_out = self.sigmoid(o_in)
+
+            e_o = y - o_out
+            d_o = e_o * self.sigmoid_der(o_out)
+            e_h = d_o.dot(self.w2.T)
+            d_h = e_h * self.sigmoid_der(h_out)
+
+            self.w1 += x.T.dot(d_h) * self.lr
+            self.b1 += np.sum(d_h, axis=0, keepdims=True) * self.lr
+            self.w2 += h_out.T.dot(d_o) * self.lr
+            self.b2 += np.sum(d_o, axis=0, keepdims=True) * self.lr
+
+def main():
+    mlp = MLP(2, 2, 1)
+    X = np.array([[0,0],[0,1],[1,0],[1,1]])
+    y = np.array([[0],[1],[1],[0]])
+    mlp.train(X, y)
+    for x in X:
+        prediction = mlp.predict(x)
+        print(f"Input: {x}, Predicted: {int(round(prediction[0][0]))}") # round to 0 or 1
+
+if __name__ == "__main__":
+    main()""")
